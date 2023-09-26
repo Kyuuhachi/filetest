@@ -1,9 +1,12 @@
+use std::io;
+use std::path::Path;
+
 #[filetest::filetest("files/*")]
 fn test_file(
-	path: &std::path::Path,
+	path: &Path,
 	bytes: &[u8],
 	text: &str,
-) -> std::io::Result<()> {
+) -> io::Result<()> {
 	assert_eq!(std::fs::read(path)?, bytes);
 	assert_eq!(bytes, text.as_bytes());
 	Ok(())

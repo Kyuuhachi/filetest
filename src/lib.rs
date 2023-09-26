@@ -102,10 +102,9 @@ fn process(attr: TokenStream, item: TokenStream) -> Option<TokenStream> {
 
 			let test_name = test_name(&path);
 			let call_args = args.iter().map(|a| a.to_tokens(&rel, &abs)).collect::<Vec<_>>();
-			let ret = &item_fn.sig.output;
 			out.extend(quote! {
 				#[test]
-				fn #test_name() #ret {
+				fn #test_name() -> impl ::std::process::Termination {
 					super::#fn_name(#(#call_args),*)
 				}
 			})
