@@ -12,6 +12,9 @@ fn test_file(
 	Ok(())
 }
 
+#[filetest::filetest("files/*")]
+fn path_as_str(path: &str) {}
+
 // This creates tests `test_file::example_txt` and `test_file::file_rs`
 
 fn main() {}

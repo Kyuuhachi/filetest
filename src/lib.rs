@@ -57,7 +57,7 @@ impl Arg {
 
 	fn to_tokens(&self, rel: &LitStr, abs: &LitStr) -> TokenStream {
 		match self {
-			Arg::Path => quote! { ::std::path::Path::new(#abs) },
+			Arg::Path => quote! { ::core::convert::AsRef::as_ref(#abs) },
 			Arg::Bytes => quote! { ::core::include_bytes!(#rel) },
 			Arg::Text => quote! { ::core::include_str!(#rel) },
 			Arg::Illegal(e) => e.to_compile_error(),
