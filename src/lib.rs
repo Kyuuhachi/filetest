@@ -10,12 +10,19 @@
 //! }
 //! ```
 //!
-//! The function can have any combination of the three arguments shown above[^footnote]: note that
-//! they are identified by name, not by type.
+//! This crate requires the `proc_macro_span` unstable feature, in order to support relative paths.
 //!
-//! This macro requires the `proc_macro_span` unstable feature, in order to support relative paths.
+//! # Arguments
+//! Arguments passed to the function are identified by name, not by type. All references are `'static`.
+//! Currently, the following three arguments are supported:
 //!
-//![^footnote]: All are `'static`.
+//! | Name | Type | Content |
+//! |-|-|-|
+//! | `path`  | `&T where str: AsRef<T>`[^path] | Absolute path to the file |
+//! | `bytes` | `&[u8]` | File contents, as seen by `include_bytes!()` |
+//! | `text` | `&str` | File contents, as seen by `include_str!()` |
+//!
+//! [^path]: This includes `str`, `std::path::Path`, and `camino::Utf8Path`.
 
 use proc_macro2::{Span, TokenStream};
 use syn::{Ident, ItemFn, LitStr, Error, Result, FnArg, Pat};
